@@ -178,13 +178,13 @@ class Window(Gtk.Window):
 
     def save_image_to_cache(self, image: str) -> str:
         image_cache = os.path.join(CACHE, image[1:])
-        is_gif = image_cache.endswith('.gif')
+        is_gif = image.endswith('.gif')
         if is_gif:
             image_cache += '.jpg'
 
         if not os.path.exists(image_cache):
             if is_gif:
-                save_first_frame(image, image_cache)
+                save_first_frame(image, image_cache + '.jpg')
             else:
                 cache_path = Path(image_cache).parent
                 cache_path.mkdir(parents=True, exist_ok=True)
