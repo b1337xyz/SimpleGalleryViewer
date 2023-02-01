@@ -2,6 +2,7 @@
 
 ![demo](demo.png)
 
+
 ## Install
 #### Debian
 ```
@@ -24,8 +25,8 @@ Default image viewer: [nsxiv](https://codeberg.org/nsxiv/nsxiv)
   "dir": ""
 }
 ```
-
-## TODO
+---
+### TODO
 - [ ] Settings menu
 - [ ] GIF support
 - [ ] Use GTK as image viewer?
