@@ -6,9 +6,9 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
 from pathlib import Path
-import os
 import subprocess as sp
 import json
+import os
 
 
 HOME = os.getenv('HOME')
@@ -42,7 +42,7 @@ def save_config(config: dict):
 
 def is_image(s: str) -> bool:
     # lazy way
-    return s.split('.')[-1].lower() in ['jpeg', 'jpg', 'png', 'webp']
+    return s.split('.')[-1].lower() in ['jpeg', 'jpg', 'png', 'webp', 'gif']
 
 
 def get_images(Dir: str) -> list:
@@ -63,6 +63,10 @@ def get_images(Dir: str) -> list:
                 images.append(os.path.join(path, i))
                 break
     return images
+
+
+def save_first_frame(image: str, destination: str):
+    sp.run(['convert', f'{image}[0]', '-resize', '250x350', destination])
 
 
 class Window(Gtk.Window):
@@ -174,11 +178,18 @@ class Window(Gtk.Window):
 
     def save_image_to_cache(self, image: str) -> str:
         image_cache = os.path.join(CACHE, image[1:])
+        is_gif = image_cache.endswith('.gif')
+        if is_gif:
+            image_cache += '.jpg'
+
         if not os.path.exists(image_cache):
-            cache_path = Path(image_cache).parent
-            cache_path.mkdir(parents=True, exist_ok=True)
-            pixbuf = Pixbuf.new_from_file_at_scale(image, 250, 350, True)
-            pixbuf.savev(image_cache, type='jpeg')
+            if is_gif:
+                save_first_frame(image, image_cache)
+            else:
+                cache_path = Path(image_cache).parent
+                cache_path.mkdir(parents=True, exist_ok=True)
+                pixbuf = Pixbuf.new_from_file_at_scale(image, 250, 350, True)
+                pixbuf.savev(image_cache, type='jpeg')
         return image_cache
 
     def pop_files(self, full_path):
