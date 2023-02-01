@@ -19,7 +19,7 @@ Default image viewer: [nsxiv](https://codeberg.org/nsxiv/nsxiv)
 // config.json
 
 {
-  "image_viewer": 'nsxiv -bqr -z 90',
+  "image_viewer": "nsxiv -bqr -z 90",
   "dir": ""
 }
 ```
