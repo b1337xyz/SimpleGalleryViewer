@@ -48,7 +48,7 @@ def is_image(s: str) -> bool:
 def get_images(Dir: str) -> list:
     images = []
     # add the first image in Dir
-    for i in os.listdir(Dir):
+    for i in sorted(os.listdir(Dir)):
         if is_image(i):
             images.append(os.path.join(Dir, i))
             break
