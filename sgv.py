@@ -47,7 +47,7 @@ def get_images(Dir: str) -> list:
         for i in sorted(os.listdir(Dir)) if is_image(i)
     ]
     if images:
-        return [images[0]]  # return the first image in Dir
+        images = [images[0]]  # add the first image in Dir
 
     # find the first image in every subdirectory of Dir
     for r, d, f in os.walk(Dir, followlinks=True):
