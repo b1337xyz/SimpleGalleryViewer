@@ -1,4 +1,4 @@
 {
-  "image_viewer": ["nsxiv", "-bqr", "-z", "90"],
+  "image_viewer": "nsxiv -bqr -z 90",
   "dir": ""
 }
