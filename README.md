@@ -1,5 +1,7 @@
 # *SimpleGalleryViewer*
 
+![demo](demo.png)
+
 ## Install
 #### Debian
 ```
@@ -22,8 +24,6 @@ Default image viewer: [nsxiv](https://codeberg.org/nsxiv/nsxiv)
   "dir": ""
 }
 ```
-
-![demo](demo.png)
 
 ## TODO
 - [ ] Settings menu
