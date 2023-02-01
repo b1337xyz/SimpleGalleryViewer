@@ -28,4 +28,4 @@ Default image viewer: [nsxiv](https://codeberg.org/nsxiv/nsxiv)
 ## TODO
 - [ ] Settings menu
 - [ ] GIF support
-- [ ] Use GTK as image viwer?
+- [ ] Use GTK as image viewer?
