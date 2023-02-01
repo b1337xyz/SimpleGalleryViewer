@@ -12,12 +12,13 @@ import json
 
 
 HOME = os.getenv('HOME')
-CONFIG = os.path.join(HOME, '.config/sgv.json')
+ROOT = os.path.dirname(os.path.realpath(__file__))
+CONFIG = os.path.join(ROOT, 'config.json')
 CACHE = os.path.join(HOME, '.cache/sgv')
-IMG_VIEWER = ['nsxiv', '-bqr', '-z', '90']
 WIDTH = 1024
 HEIGHT = 600
 TREE_VIEW_WIDTH = 200
+DEFAULT_IMAGE_VIEWER = 'nsxiv -bqr -z 90'
 
 if not os.path.exists(CACHE):
     os.mkdir(CACHE)
@@ -28,7 +29,10 @@ def load_config() -> dict:
         with open(CONFIG, 'r') as fp:
             return json.load(fp)
     except FileNotFoundError:
-        return {'dir': ''}
+        return {
+            'image_viewer': DEFAULT_IMAGE_VIEWER,
+            'dir': '',
+        }
 
 
 def save_config(config: dict):
@@ -72,6 +76,7 @@ class Window(Gtk.Window):
         if not os.path.exists(self.config['dir']):
             self.set_config_dir()
 
+        self.image_viewer = self.config['image_viewer'].split()
         Dir = self.config['dir']
         assert os.path.isdir(Dir)
 
@@ -216,7 +221,8 @@ class Window(Gtk.Window):
             frame = img_box.get_children()[0]
             img = frame.get_children()[0]
             path = str(Path(img.props.file).parent).replace(CACHE, '')
-            sp.Popen(IMG_VIEWER + [path], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
+            sp.Popen(self.image_viewer + [path],
+                     stdout=sp.DEVNULL, stderr=sp.DEVNULL)
         except Exception as err:
             print(err)
 
