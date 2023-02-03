@@ -19,9 +19,6 @@ HEIGHT = 600
 TREE_VIEW_WIDTH = 200
 DEFAULT_IMAGE_VIEWER = 'nsxiv -bqr -z 90'
 
-if not os.path.exists(CACHE):
-    os.mkdir(CACHE)
-
 
 def load_config() -> dict:
     try:
