@@ -5,6 +5,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
 from pathlib import Path
+from sys import argv
 import subprocess as sp
 import json
 import os
@@ -66,11 +67,13 @@ def save_first_frame(image: str, destination: str):
 
 
 class Window(Gtk.Window):
-    def __init__(self):
+    def __init__(self, Dir=None):
         super().__init__()
         self.set_border_width(0)
         self.set_default_size(WIDTH, HEIGHT)
         self.config = load_config()
+        if Dir:
+            self.config['dir'] = os.path.realpath(Dir)
 
         # TODO: add settings
         if not os.path.exists(self.config['dir']):
@@ -256,7 +259,7 @@ class Window(Gtk.Window):
 
 
 if __name__ == '__main__':
-    win = Window()
+    win = Window(None if len(argv) == 1 else argv[1])
     win.connect("destroy", Gtk.main_quit)
     win.show_all()
     Gtk.main()
